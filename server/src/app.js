@@ -5,7 +5,16 @@ import cookieParser from 'cookie-parser';
 import rateLimit from 'express-rate-limit';
 import morgan from 'morgan';
 import env from './config/env.js';
+
 import healthRoutes from './routes/healthRoutes.js';
+import authRoutes from './routes/authRoutes.js';
+import donationRoutes from './routes/donationRoutes.js';
+import requestRoutes from './routes/requestRoutes.js';
+import pickupRoutes from './routes/pickupRoutes.js';
+import dashboardRoutes from './routes/dashboardRoutes.js';
+import notificationRoutes from './routes/notificationRoutes.js';
+import adminRoutes from './routes/adminRoutes.js';
+
 import { notFoundHandler, errorHandler } from './middleware/errorHandler.js';
 
 const app = express();
@@ -62,7 +71,14 @@ app.get('/', (req, res) => {
   });
 });
 
-// Future API routes will be mounted under /api/v1/...
+// Mount /api/v1 routes
+app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/donations', donationRoutes);
+app.use('/api/v1/requests', requestRoutes);
+app.use('/api/v1/pickups', pickupRoutes);
+app.use('/api/v1/dashboard', dashboardRoutes);
+app.use('/api/v1/notifications', notificationRoutes);
+app.use('/api/v1/admin', adminRoutes);
 
 // Handle unknown routes
 app.use(notFoundHandler);
